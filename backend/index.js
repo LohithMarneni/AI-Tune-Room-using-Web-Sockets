@@ -32,7 +32,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use('/auth', require('./routes/authRoute'));
-
+app.use('/api/songs', require('./routes/songs/addSongRoute'));
+app.use('/api/songs', require('./routes/songs/getSongsRoute'));
+app.use('/api/songs', require('./routes/songs/updateSongRoute'));
+app.use('/api/songs', require('./routes/songs/deleteSongRoute'));
 app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('json')) {
