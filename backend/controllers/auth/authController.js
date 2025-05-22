@@ -19,9 +19,15 @@ const registerUser = async (req, res) => {
         }
 
         // Convert DOB to proper format
-        const [day, month, year] = dob.split("-");
-        const formattedDob = new Date(`${year}-${month}-${day}`);
+        // const [day, month, year] = dob.split("-");
+        // const formattedDob = new Date(`${year}-${month}-${day}`);
+        // formattedDob.setUTCHours(0, 0, 0, 0);
+        const formattedDob = new Date(dob);
+        if (isNaN(formattedDob.getTime())) {
+            return res.status(400).json({ message: "Invalid date of birth provided" });
+        }
         formattedDob.setUTCHours(0, 0, 0, 0);
+
 
         // Encrypt the password
         const hashedPassword = await bcrypt.hash(password, 10);
