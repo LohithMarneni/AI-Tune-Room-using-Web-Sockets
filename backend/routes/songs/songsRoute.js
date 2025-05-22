@@ -1,0 +1,11 @@
+const express=require("express");
+const router=express.Router();
+const {addSong}=require("../../controllers/songs/addSongController");
+const {getSongs}=require("../../controllers/songs/getSongsController");
+const {deleteSong}=require("../../controllers/songs/deleteSongController");
+const {updateSong}=require("../../controllers/songs/updateSongController");
+router.post("/addsong",addSong);
+router.get("/getsongs",getSongs);
+router.put("/updatesong",updateSong);
+router.delete("/deletesong",deleteSong);
+module.exports=router;

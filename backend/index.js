@@ -10,6 +10,7 @@ const { logger } = require('./middleware/logEvents');
 const errorHandler = require('./middleware/errorHandler');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
+const verifyJWT = require('./middleware/verifyJWT');    
 const PORT = process.env.PORT || 3500;
 // Connect to MongoDB
 connectDB();
@@ -31,11 +32,10 @@ app.use(cookieParser());
 // built-in middleware for json 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use('/auth', require('./routes/authRoute'));
-app.use('/api/songs', require('./routes/songs/addSongRoute'));
-app.use('/api/songs', require('./routes/songs/getSongsRoute'));
-app.use('/api/songs', require('./routes/songs/updateSongRoute'));
-app.use('/api/songs', require('./routes/songs/deleteSongRoute'));
+app.use('/auth', require('./routes/auth/authRoute'));
+app.use(verifyJWT);
+app.use('/api/songs', require('./routes/songs/songsRoute'));
+app.use("/api/room", require("./routes/room/roomRoute"));
 app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('json')) {
